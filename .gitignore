@@ -6,3 +6,6 @@
 
 #Ignores ALL BINARY FILES
 *.bin
+
+#Ignores Windows' Thunbs.db
+Thumbs.db
