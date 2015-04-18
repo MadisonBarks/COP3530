@@ -1,3 +1,7 @@
+/**
+  * Sorts integers defined in a binary file
+  */
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h> //For atoi && malloc
@@ -7,20 +11,43 @@
 
 typedef int bool;
 
+/**
+  * Opens a file for reading
+  * @param fileName The name of the file to open
+  * @returns A pointer to a FILE struct returned by fopen(3)
+  */
 FILE * openFile(char * fileName) {
   return fopen(fileName, "rb");
 }
 
+/**
+  * Checks the file size and makes sure that we have enough integers to load.
+  * @param fp A pointer to a FILE struct
+  * @param wantedInts How many integers the user wants to sort
+  * @return <code>true</code> if we have enough, <code>false</code> otherwise
+  */
 bool checkFileSize(FILE * fp, int wantedInts) {
   int actualNumbers;
   fread(&actualNumbers, sizeof(int), 1, fp);
   return actualNumbers >= wantedInts;
 }
 
+/**
+  * Reads in the amount of numbers that the user wants to sort from the file
+  * @param array A pre-allocated array of integers to load into
+  * @param wantedNumbers How many numbers the user wants to load
+  * @param fp A pointer to a FILE struct
+  */
 void readInNumbers(int * array, int wantedNumbers, FILE * fp) {
   fread(array, sizeof(int), wantedNumbers, fp);
 }
 
+/**
+  * Sorts an integer array using the quicksort algorithm
+  * @param array An array with integers in it
+  * @param leftIndex The left-most index to look at
+  * @param rightIndex The right-most index to look at
+  */
 void quicksort(int * array, int leftIndex, int rightIndex) {
   int pivot = array[(leftIndex + rightIndex) / 2];
   int internalLeft = leftIndex;
@@ -50,18 +77,6 @@ void quicksort(int * array, int leftIndex, int rightIndex) {
   if(rightIndex > internalRight) {
     quicksort(array, internalLeft, rightIndex);
   }
-}
-
-void printArrayToConsole(int array[]) {
-  int i;
-  int arraySize = (sizeof(array) / sizeof(int));
-  printf("Array Size: %d\n", (sizeof(array) / sizeof(int)));
-
-  for(i = 0; i < arraySize; i++) {
-    printf("%d ", array[i]);
-    printf("%d ", i);
-  }
-  printf("\n");
 }
 
 int main(int argc, char * argv[]) {
