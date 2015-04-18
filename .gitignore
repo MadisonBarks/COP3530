@@ -1,0 +1,8 @@
+#Ignore all .exe files
+*.exe
+
+#Ignore sort testing files
+*results.txt
+
+#Ignores ALL BINARY FILES
+*.bin
